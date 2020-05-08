@@ -1,0 +1,9 @@
+----------------------
+- LIBRERIA : VERSION -
+----------------------
+
+* flask	   : 1.1.1
+* nltk     : 3.4.5
+* spacy    : 2.2.3
+
+Python version 3.7.4

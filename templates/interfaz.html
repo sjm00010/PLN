@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8"/>
+		<meta name="viewport" 
+			content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!-- Bootstrap -->
+		<link rel="stylesheet" 
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+			crossorigin="anonymous" />
+			
+		<title>Práctica 10</title>
+		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}" />
+	</head>
+	<body>
+		<!-- Barra de navegación -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+				<div class="navbar-brand">
+					<img src="{{url_for('static', filename='logo.png')}}" 
+					width="50" height="30" 
+					class="d-inline-block align-top" alt="logo" />
+					Procesamiento del Lenguaje Natural
+				</div>
+				{% if AR == True %} 
+					<button class="navbar-toggler" type="button" data-toggle="collapse" 
+					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+					aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ml-auto">
+							<li class="nav-item dropdown active">
+								<a class="nav-link dropdown-toggle" id="navbarDropdown"
+									role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Análisis semántico
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="desambiguar" onclick="$(carga())">Desambiguación</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="sinonimos" onclick="$(carga())">Sinónimos</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="antonimos" onclick="$(carga())">Antónimos</a>
+								</div>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="amorfo" onclick="$(carga())">Análisis morfológico</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="entidad" onclick="$(carga())">Reconocimiento de entidades</a>
+							</li>
+						</ul>
+					</div>
+				{% endif %}
+			</div>
+		</nav>
+		
+		<script>
+			function carga(){
+				document.getElementById("ca").style.display = "block";
+				document.getElementById("pa").style.display = "none";
+			}
+		</script>
+		
+		<div id="ca" class="container" style="display : none">
+			<div class="text-center mb-4 mt-5">
+				<span class="h2">Procesando...</span>
+			</div>
+			<div style="width:100%;height:0;padding-bottom:46%;position:relative;">
+				{{CAR}}
+			</div>
+		</div>
+		
+		{% block content %}
+			
+		{% endblock %}
+		
+		<footer class="fixed-bottom mt-5 py-1 bg-light">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-4">
+						{% if AR != False %}
+							<form method="post" action="/borrar">
+								<input class="btn btn-block btn-outline-danger" type="submit" value="Resetear">
+							</form>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		<!-- Scripts Bootstrap -->
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+			crossorigin="anonymous" ></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+			crossorigin="anonymous" ></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
+			crossorigin="anonymous" ></script>
+	</body>
+</html>

@@ -1,0 +1,44 @@
+{% extends 'interfaz.html' %}
+
+{% block content %}
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+			crossorigin="anonymous" ></script>
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="popover"]').popover({
+				html: true,
+			});
+		});
+	</script>
+
+	<style>
+		.popover {
+			max-height: 40em;
+			overflow-y: auto;
+			white-space:pre-wrap;
+		}
+	</style>
+	
+
+	<div class="container">
+		<div id="pa" style="display : block">
+			<div class="alert alert-secondary mt-3" role="alert">
+				En las palabras ambiguas, el significado en <b>negrita</b> es 
+				el que tiene en el contexto del texto procesado. Para consultar
+				una palabra basta con pulsar sobre ella, para ocultar la información
+				volver a pulsar.
+			</div>
+			<div class="card mt-3 mb-5">
+				<div class="card-header">
+					<h5>Texto procesado, palabras desambiguadas</h5>
+				</div>
+				<div class="card-body">
+					{{ SOL }}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}

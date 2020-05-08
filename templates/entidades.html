@@ -1,0 +1,37 @@
+{% extends 'interfaz.html' %}
+
+{% block content %}
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+			crossorigin="anonymous" ></script>
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="popover"]').popover({
+			html: true,
+			});
+		});
+	</script>
+
+	<div class="container">
+		<div id="pa" style="display : block">
+			<div class="alert alert-secondary mt-3" role="alert">
+				La palabra aparece acompañada de la categoría en la que se ha clasificado.
+				<div>
+					<span class="badge badge-primary">Palabra
+						<span class="badge badge-light">CATEGORIA</span>
+					</span>
+				</div>
+			</div>
+			<div class="card mt-3 mb-5">
+				<div class="card-header">
+					<h5>Reconocimiento de entidades</h5>
+				</div>
+				<div class="card-body">
+					{{ SOL }}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}

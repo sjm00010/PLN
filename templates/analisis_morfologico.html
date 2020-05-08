@@ -1,0 +1,216 @@
+{% extends 'interfaz.html' %}
+
+{% block content %}
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+			crossorigin="anonymous" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" 
+			integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" 
+			crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="popover"]').popover({
+			html: true,
+			});
+		});
+	</script>
+
+	<div class="container">
+		<div id="pa" style="display : block">
+			<div class="card mt-3">
+				<div class="card-header">
+					<h5>Resultado del Análisis Morfológico</h5>
+				</div>
+				<div class="card-body">
+					Tras analizar el texto se ha obtenido :
+					<ul>
+						<li><b>Toltal de sentencias</b> : {{ SOL["frases"] }}</li>
+						<li><b>Toltal de tokens</b> : {{ SOL["tokens"] }}</li>
+						<li><b>Toltal de tokens únicos (sin repetidos)</b> : {{ SOL["tokensNR"] }}</li>
+						<li><b>Toltal de palabras vacías</b> : {{ SOL["vacias"] }}</li>
+						<li><b>Toltal de palabras vacías (sin repetidos)</b> : {{ SOL["vaciasNR"] }}</li>
+						<li><b>Top 5 de palabras y su frecuencia</b> :
+							<ul>
+								<li>{{SOL["top1P"]}} : {{SOL["top1F"]}} veces</li>
+								<li>{{SOL["top2P"]}} : {{SOL["top2F"]}} veces</li>
+								<li>{{SOL["top3P"]}} : {{SOL["top3F"]}} veces</li>
+								<li>{{SOL["top4P"]}} : {{SOL["top4F"]}} veces</li>
+								<li>{{SOL["top5P"]}} : {{SOL["top5F"]}} veces</li>
+							</ul>
+						</li>
+						<li>Número de ...
+							<ul>
+								<li><b>Adjetivos</b> : {{SOL["adjetivos"]}} veces</li>	
+								<li><b>Adverbios</b> : {{SOL["adverbios"]}} veces</li>	
+								<li><b>Sustantivos</b> : {{SOL["nombres"]}} veces</li>	
+								<li><b>Verbos</b> : {{SOL["verbos"]}} veces</li>	
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+			</div>
+			<h3 class="text-center display-4">Gráfica de palabras</h3>
+			<canvas id="totales" class="mb-3 mt-3"></canvas>
+			<hr/>
+			<h3 class="text-center display-4">Gráfica del Top 5</h3>
+			<canvas id="top" class="mb-3 mt-3"></canvas>
+			<hr/>
+			<h3 class="text-center display-4">Gráfica de tipos</h3>
+			<canvas id="numero" class="mb-5 mt-3"></canvas>
+		</div>
+	</div>
+	
+	<script>
+		var ctx = document.getElementById('totales').getContext('2d');
+		var ctx2 = document.getElementById('top').getContext('2d');
+		var ctx3 = document.getElementById('numero').getContext('2d');
+		
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels : ['Total'],
+				datasets: [{
+					label: 'Tokens',
+					data: [{{SOL["tokens"]}}],
+					backgroundColor: [
+						'rgba(255, 99, 132, 0.2)'
+					],
+					borderColor: [
+						'rgba(255, 99, 132, 1)'
+					],
+					borderWidth: 1
+				},{
+					label: 'Tokens únicos',
+					data: [{{SOL["tokensNR"]}}],
+					backgroundColor: [
+						'rgba(54, 162, 235, 0.2)'
+					],
+					borderColor: [
+						'rgba(54, 162, 235, 1)'
+					],
+					borderWidth: 1
+				},{
+					label: 'P. vacías',
+					data: [{{SOL["vacias"]}}],
+					backgroundColor: [
+						'rgba(255, 206, 86, 0.2)',
+					],
+					borderColor: [
+						'rgba(255, 206, 86, 1)',
+					],
+					borderWidth: 1
+				},{
+					label: 'P. vacías únicas',
+					data: [{{SOL["vaciasNR"]}}],
+					backgroundColor: [
+						'rgba(75, 192, 192, 0.2)',
+					],
+					borderColor: [
+						'rgba(75, 192, 192, 1)',
+					],
+					borderWidth: 1
+				}
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+		
+		var myChart2 = new Chart(ctx2, {
+			type: 'horizontalBar',
+			data: {
+				labels : ['Frecuencia'],
+				datasets: [{
+					label: "{{SOL["top1P"]}}",
+					data: [{{SOL["top1F"]}}],
+					backgroundColor: [
+						'rgba(255, 99, 132, 0.2)'
+					],
+					borderColor: [
+						'rgba(255, 99, 132, 1)'
+					],
+					borderWidth: 1
+				},{
+					label: "{{SOL["top2P"]}}",
+					data: [{{SOL["top2F"]}}],
+					backgroundColor: [
+						'rgba(54, 162, 235, 0.2)'
+					],
+					borderColor: [
+						'rgba(54, 162, 235, 1)'
+					],
+					borderWidth: 1
+				},{
+					label: "{{SOL["top3P"]}}",
+					data: [{{SOL["top3F"]}}],
+					backgroundColor: [
+						'rgba(255, 206, 86, 0.2)'
+					],
+					borderColor: [
+						'rgba(255, 206, 86, 1)'
+					],
+					borderWidth: 1
+				},{
+					label: "{{SOL["top4P"]}}",
+					data: [{{SOL["top4F"]}}],
+					backgroundColor: [
+						'rgba(75, 192, 192, 0.2)'
+					],
+					borderColor: [
+						'rgba(75, 192, 192, 1)'
+					],
+					borderWidth: 1
+				},{
+					label: "{{SOL["top5P"]}}",
+					data: [{{SOL["top5F"]}}],
+					backgroundColor: [
+						'rgba(153, 102, 255, 0.2)'
+					],
+					borderColor: [
+						'rgba(153, 102, 255, 1)'
+					],
+					borderWidth: 1
+				}
+				]
+			},
+			options: {
+				scales: {
+					xAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+		
+		var myChart3 = new Chart(ctx3, {
+			type: 'doughnut',
+			data: {
+				labels : ['Adjetivos', 'Adverbios', 'Sustantivos', 'Verbos'],
+				datasets: [{
+					label: "Número de...",
+					data: [{{SOL["adjetivos"]}}, {{SOL["adverbios"]}}, {{SOL["nombres"]}},{{SOL["verbos"]}}],
+					backgroundColor: [
+						'rgb(255, 99, 132)',
+						'rgb(54, 162, 235)',
+						'rgb(255, 205, 86)',
+						'rgb(142, 68, 173)'
+					]
+				}
+				]
+			}
+		});
+	</script>
+	
+{% endblock %}

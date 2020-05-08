@@ -1,0 +1,41 @@
+{% extends 'interfaz.html' %}
+
+{% block content %}
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+			crossorigin="anonymous" ></script>
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="popover"]').popover({
+			html: true,
+			});
+		});
+	</script>
+
+	<div class="container">
+		<div id="pa" style="display : block">
+			<div class="alert alert-dark my-3" role="alert">
+				En los sinónimos, la <b>negrita</b> indica
+				el seleccionado de entre los disponibles.
+				<div>
+					<span class="badge badge-primary" data-toggle="popover" 
+						data-content="Ejemplo" title="Palabra original">Adjetivos</span>
+					<span class="badge badge-info" data-toggle="popover" 
+						data-content="Ejemplo" title="Palabra original">Sustantivos</span>
+					<span class="badge badge-warning" data-toggle="popover" 
+						data-content="Ejemplo" title="Palabra original">Verbos</span>
+				</div>
+			</div>
+			<div class="card mb-5">
+				<div class="card-header">
+					<h5>Sinónimos</h5>
+				</div>
+				<div class="card-body">
+					{{ SOL }}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}

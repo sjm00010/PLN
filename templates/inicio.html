@@ -1,0 +1,74 @@
+{% extends 'interfaz.html' %}
+
+{% block content %}
+	
+	<div class="container">
+		<div id="pa" style="display : block">
+			<p>
+				{% with messages = get_flashed_messages() %}
+				  {% if messages %}
+					{% for message in messages %}
+						{% if AR == True %}
+							<div class="alert alert-success" role="alert">{{ message }}</div>
+						{% else %}
+							<div class="alert alert-danger" role="alert">{{ message }}</div>
+						{% endif %}
+					{% endfor %}
+				  {% endif %}
+				{% endwith %}
+				
+			</p>
+			
+			<div class="jumbotron mt-4 py-4">
+				<h1 class="display-4">Práctica final de Procesamiento del Lenguaje Natural</h1>
+				<p class="lead">Cargue un archivo o introduzca un texto, después seleccione procesar.</p>
+				{% if AR != False %}
+					<hr/>
+					<p>Opciones :</p>
+					<ul>
+						<li><strong>Análisis semántico</strong> :
+							<ul>
+								<li><strong>Desambiguación</strong> : Analiza el texto introducido para comprobar si existe alguna palabra que pueda tener varios sentidos, si es así muestra en la interfaz la palabra ambigua y su definiciones.</li>
+								<li><strong>Sinónimos</strong> : Crea un nuevo texto reemplazando palabras por su sinónimos. El nuevo texto marca las palabras que se han sido sustituidas de forma coloreada.</li>
+								<li><strong>Antónimos</strong> : Crea un nuevo texto reemplazando palabras por su antónimos. El nuevo texto marca las palabras que se han sido sustituidas de forma coloreada.</li>
+							</ul>
+						</li>
+						<li><strong>Análisis morfológico</strong> : Presenta la información del análisis del texto en una tabla y gráficos.</li>
+						<li><strong>Reconocimiento de entidades</strong> :  Identifica todos los tipos de entidades existentes en NLTK (PERSON,LOCATION, DATE…)</li>
+					</ul>
+				{% endif %}
+			</div>
+		</div>
+		
+		
+		{% if AR == False %}
+			<h2>Selecciona un archivo para analizar</h2>
+			
+			<form method="post" action="/archivo" enctype="multipart/form-data">
+				<dl>
+					<p>
+						<input type="file" name="file" autocomplete="off" required>
+					</p>
+				</dl>
+				<p>
+					<input class="btn btn-lg btn-block btn-primary" type="submit" value="Procesar archivo">
+				</p>
+			</form>
+			
+			<hr class="my-3"/>
+			<h2>Inserta un texto para analizar.</h2>
+			
+			<form method="post" action="/texto" enctype="multipart/form-data" class="mb-5">
+				<dl>
+					<p>
+						<textarea class="form-control" type="text" name="texto" autocomplete="off" required></textarea>
+					</p>
+				</dl>
+				<p>
+					<input class="btn btn-lg btn-block btn-info" type="submit" value="Procesar texto">
+				</p>
+			</form>
+		{% endif %}
+	</div>
+	
+{% endblock %}
